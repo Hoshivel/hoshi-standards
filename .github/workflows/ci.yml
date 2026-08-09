@@ -1,0 +1,36 @@
+# 主分支的驗證。
+#
+# 本倉庫只有 Markdown，沒有建置步驟——所以這裡驗的是**連結指不指得到東西**。
+# 一條指向不存在檔案的相對連結，在 GitHub 上會安靜地 404，而 diff 上看不出來。
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    name: 內部連結
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: 相對連結必須指得到檔案
+        run: python3 tools/check-links.py
