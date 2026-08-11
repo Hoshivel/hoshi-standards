@@ -34,3 +34,25 @@ jobs:
 
       - name: 相對連結必須指得到檔案
         run: python3 tools/check-links.py
+
+  # 安全掃描接在基礎驗證之後：`links` 紅燈時整組 **skipped**。
+  #
+  # 本倉庫沒有 CodeQL（沒有程式碼可以建），所以這道閘擋掉的不是
+  # 四十分鐘——是「同一顆 commit 上收到兩顆紅燈，而第二顆與根因無關」。
+  # 十五個倉庫維持同一個形狀，掃描本身的定義在 `security.yml`，
+  # 那支同時還掛著每週排程（**不**經過這道閘）。
+  #
+  # 不必再寫一次草稿 PR 的 `if`：`links` 因為草稿而 skipped 時，
+  # `needs:` 它的 job 一併 skipped。
+  security:
+    name: 安全掃描
+    needs: [links]
+    uses: ./.github/workflows/security.yml
+    permissions:
+      contents: read
+      # 呼叫端的權限是被呼叫 job 的**上限**，所以這裡要給到聯集。
+      # CodeQL 與 Trivy 上傳 SARIF 要 security-events: write。
+      security-events: write
+    # 本倉庫的掃描不需要任何 secret，但呼叫端不宣告的話被呼叫端一個都拿不到，
+    # 而形狀要與其餘十二個倉庫一致。
+    secrets: inherit
