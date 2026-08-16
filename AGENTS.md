@@ -35,9 +35,18 @@ git clone https://github.com/Hoshivel/workspace.git ../workspace   # 雲端：�
 
 ## 2. 驗證
 
-本倉庫只有 Markdown，沒有建置步驟。改動後人工確認：
+本倉庫只有 Markdown，沒有建置步驟。改動後執行：
 
-- 內部連結指得到東西。
+```sh
+python3 tools/check-links.py     # 相對連結指不到東西就是紅燈
+```
+
+**這一項不要用眼睛對。** 一條壞掉的相對連結在 GitHub 上是安靜的 404，
+diff 上看不出來——腳本就是為此存在的，`ci.yml` 也跑同一支。
+先在本機跑過再推（workspace `AGENTS.md` §1.7.3：CI 不是第一道驗證）。
+
+其餘兩項腳本看不到，靠審閱守住：
+
 - 規範關鍵字（必須／不得／應／不宜／可）用得符合 `conventions/api.md` §0.2。
 - 條文與理由分開：要求寫在正文，理由寫在 `> **註**` 區塊。
 
