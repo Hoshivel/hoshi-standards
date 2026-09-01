@@ -2,30 +2,19 @@
 
 # AGENTS.md — hoshi-standards（公開）
 
-> **代理執行規範的正本不在這裡**，在
-> [workspace](https://github.com/Hoshivel/workspace) 的 `AGENTS.md`：
-> 四層記錄（焦點／todo／logs／decisions）、中斷復原流程、跨倉庫協作流程、
-> 分支與 PR 規則全在那裡。
-> 本檔只補上**這個倉庫自己的**東西。
+> 共通流程以 [workspace](https://github.com/Hoshivel/workspace) 的 `AGENTS.md`
+> 為準；本檔只列本倉庫規則。
 >
-> **本倉庫是公開的。** 外部讀者不需要 workspace——讀 `README.md` 與那兩份
-> 規範就夠了。§0 是給 Hoshivel 自己的代理看的。
+> **本倉庫是公開的。** 外部讀者不需要 workspace——讀 `README.md` 與 §1 列的兩份
+> 規範就夠了；§0 是給 Hoshivel 自己的代理看的。
 
 ## 0. 開工前
 
-**先取得 workspace，讀它的 `focus.md` 與 `AGENTS.md`。**
-
-```sh
-cat ../workspace/focus.md                                          # 本機：就在旁邊
-git clone https://github.com/Hoshivel/workspace.git ../workspace   # 雲端：自己補上
-```
-
-- 取不到就**停下來告訴使用者**，不要退回在本倉庫自建 `TODO.md` 或工作記錄。
-- **本倉庫的待辦在 `workspace/todo/hoshi-standards/`**，工作日誌在 `workspace/logs/hoshi-standards/`。
-  **不得**自建 `TODO.md`／`logs/`，也不得記錄領取、分支或 `Status: Editing`
-  （workspace `AGENTS.md` §4.4、§5）。
-- 續接既有任務時**沿用該事項記的分支與 PR**，不要另開新分支
-  （workspace `AGENTS.md` §4.3）。
+1. 讀 `../workspace/focus.md` 與 `../workspace/AGENTS.md`；缺少時先
+   `git clone https://github.com/Hoshivel/workspace.git ../workspace`，
+   取不到就停止並說明。
+2. 待辦與日誌在 `workspace/todo/hoshi-standards/`、
+   `workspace/logs/hoshi-standards/`；不得在本倉庫另建副本。
 
 ## 1. 入場閱讀順序
 
